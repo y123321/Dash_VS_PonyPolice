@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_dash_vs_ponypolice" default="compile.module.dash_vs_ponypolice">
+  <dirname property="module.dash_vs_ponypolice.basedir" file="${ant.file.module_dash_vs_ponypolice}"/>
+  
+  <property name="module.jdk.home.dash_vs_ponypolice" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.dash_vs_ponypolice" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.dash_vs_ponypolice" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.dash_vs_ponypolice" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="dash_vs_ponypolice.output.dir" value="${module.dash_vs_ponypolice.basedir}/build/classes/main"/>
+  <property name="dash_vs_ponypolice.testoutput.dir" value="${module.dash_vs_ponypolice.basedir}/build/classes/test"/>
+  
+  <path id="dash_vs_ponypolice.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="dash_vs_ponypolice.module.production.classpath">
+    <path refid="${module.jdk.classpath.dash_vs_ponypolice}"/>
+  </path>
+  
+  <path id="dash_vs_ponypolice.runtime.production.module.classpath">
+    <pathelement location="${dash_vs_ponypolice.output.dir}"/>
+  </path>
+  
+  <path id="dash_vs_ponypolice.module.classpath">
+    <path refid="${module.jdk.classpath.dash_vs_ponypolice}"/>
+    <pathelement location="${dash_vs_ponypolice.output.dir}"/>
+  </path>
+  
+  <path id="dash_vs_ponypolice.runtime.module.classpath">
+    <pathelement location="${dash_vs_ponypolice.testoutput.dir}"/>
+    <pathelement location="${dash_vs_ponypolice.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.dash_vs_ponypolice">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.dash_vs_ponypolice">
+    <patternset refid="excluded.from.module.dash_vs_ponypolice"/>
+  </patternset>
+  
+  
+  <target name="compile.module.dash_vs_ponypolice" depends="compile.module.dash_vs_ponypolice.production,compile.module.dash_vs_ponypolice.tests" description="Compile module Dash VS PonyPolice"/>
+  
+  <target name="compile.module.dash_vs_ponypolice.production" depends="register.custom.compilers" description="Compile module Dash VS PonyPolice; production classes"/>
+  
+  <target name="compile.module.dash_vs_ponypolice.tests" depends="register.custom.compilers,compile.module.dash_vs_ponypolice.production" description="compile module Dash VS PonyPolice; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.dash_vs_ponypolice" description="cleanup module">
+    <delete dir="${dash_vs_ponypolice.output.dir}"/>
+    <delete dir="${dash_vs_ponypolice.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_dash_vs_ponypolice-dash_vs_ponypolice" default="compile.module.dash_vs_ponypolice-dash_vs_ponypolice">
+  <dirname property="module.dash_vs_ponypolice-dash_vs_ponypolice.basedir" file="${ant.file.module_dash_vs_ponypolice-dash_vs_ponypolice}"/>
+  
+  <property name="module.jdk.home.dash_vs_ponypolice-dash_vs_ponypolice" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.dash_vs_ponypolice-dash_vs_ponypolice" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.dash_vs_ponypolice-dash_vs_ponypolice" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.dash_vs_ponypolice-dash_vs_ponypolice" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="dash_vs_ponypolice-dash_vs_ponypolice.output.dir" value="${module.dash_vs_ponypolice-dash_vs_ponypolice.basedir}/build/classes/debug"/>
+  <property name="dash_vs_ponypolice-dash_vs_ponypolice.testoutput.dir" value="${module.dash_vs_ponypolice-dash_vs_ponypolice.basedir}/build/classes/debug"/>
+  
+  <path id="dash_vs_ponypolice-dash_vs_ponypolice.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="dash_vs_ponypolice-dash_vs_ponypolice.module.production.classpath">
+    <path refid="${module.jdk.classpath.dash_vs_ponypolice-dash_vs_ponypolice}"/>
+    <path refid="library.appcompat-v7-19.1.0.classpath"/>
+    <path refid="library.support-v4-19.1.0.classpath"/>
+  </path>
+  
+  <path id="dash_vs_ponypolice-dash_vs_ponypolice.runtime.production.module.classpath">
+    <pathelement location="${dash_vs_ponypolice-dash_vs_ponypolice.output.dir}"/>
+    <path refid="library.appcompat-v7-19.1.0.classpath"/>
+    <path refid="library.support-v4-19.1.0.classpath"/>
+  </path>
+  
+  <path id="dash_vs_ponypolice-dash_vs_ponypolice.module.classpath">
+    <path refid="${module.jdk.classpath.dash_vs_ponypolice-dash_vs_ponypolice}"/>
+    <pathelement location="${dash_vs_ponypolice-dash_vs_ponypolice.output.dir}"/>
+    <path refid="library.appcompat-v7-19.1.0.classpath"/>
+    <path refid="library.support-v4-19.1.0.classpath"/>
+  </path>
+  
+  <path id="dash_vs_ponypolice-dash_vs_ponypolice.runtime.module.classpath">
+    <pathelement location="${dash_vs_ponypolice-dash_vs_ponypolice.output.dir}"/>
+    <path refid="library.appcompat-v7-19.1.0.classpath"/>
+    <path refid="library.support-v4-19.1.0.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.dash_vs_ponypolice-dash_vs_ponypolice">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.dash_vs_ponypolice-dash_vs_ponypolice">
+    <patternset refid="excluded.from.module.dash_vs_ponypolice-dash_vs_ponypolice"/>
+  </patternset>
+  
+  <path id="dash_vs_ponypolice-dash_vs_ponypolice.module.sourcepath">
+    <dirset dir="${module.dash_vs_ponypolice-dash_vs_ponypolice.basedir}">
+      <include name="build/source/r/debug"/>
+      <include name="build/source/aidl/debug"/>
+      <include name="build/source/buildConfig/debug"/>
+      <include name="build/source/rs/debug"/>
+      <include name="src/main/java"/>
+      <include name="src/main/res"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.dash_vs_ponypolice-dash_vs_ponypolice" depends="compile.module.dash_vs_ponypolice-dash_vs_ponypolice.production,compile.module.dash_vs_ponypolice-dash_vs_ponypolice.tests" description="Compile module Dash VS PonyPolice-Dash VS PonyPolice"/>
+  
+  <target name="compile.module.dash_vs_ponypolice-dash_vs_ponypolice.production" depends="register.custom.compilers" description="Compile module Dash VS PonyPolice-Dash VS PonyPolice; production classes">
+    <mkdir dir="${dash_vs_ponypolice-dash_vs_ponypolice.output.dir}"/>
+    <javac2 destdir="${dash_vs_ponypolice-dash_vs_ponypolice.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.dash_vs_ponypolice-dash_vs_ponypolice}/javac">
+      <compilerarg line="${compiler.args.dash_vs_ponypolice-dash_vs_ponypolice}"/>
+      <bootclasspath refid="dash_vs_ponypolice-dash_vs_ponypolice.module.bootclasspath"/>
+      <classpath refid="dash_vs_ponypolice-dash_vs_ponypolice.module.production.classpath"/>
+      <src refid="dash_vs_ponypolice-dash_vs_ponypolice.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.dash_vs_ponypolice-dash_vs_ponypolice"/>
+    </javac2>
+    
+    <copy todir="${dash_vs_ponypolice-dash_vs_ponypolice.output.dir}">
+      <fileset dir="${module.dash_vs_ponypolice-dash_vs_ponypolice.basedir}/build/source/r/debug">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.dash_vs_ponypolice-dash_vs_ponypolice.basedir}/build/source/aidl/debug">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.dash_vs_ponypolice-dash_vs_ponypolice.basedir}/build/source/buildConfig/debug">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.dash_vs_ponypolice-dash_vs_ponypolice.basedir}/build/source/rs/debug">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.dash_vs_ponypolice-dash_vs_ponypolice.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.dash_vs_ponypolice-dash_vs_ponypolice.basedir}/src/main/res">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.dash_vs_ponypolice-dash_vs_ponypolice.tests" depends="register.custom.compilers,compile.module.dash_vs_ponypolice-dash_vs_ponypolice.production" description="compile module Dash VS PonyPolice-Dash VS PonyPolice; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.dash_vs_ponypolice-dash_vs_ponypolice" description="cleanup module">
+    <delete dir="${dash_vs_ponypolice-dash_vs_ponypolice.output.dir}"/>
+    <delete dir="${dash_vs_ponypolice-dash_vs_ponypolice.testoutput.dir}"/>
+  </target>
+</project>
