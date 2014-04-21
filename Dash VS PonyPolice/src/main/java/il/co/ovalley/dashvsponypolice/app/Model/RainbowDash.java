@@ -1,8 +1,11 @@
 package il.co.ovalley.dashvsponypolice.app.Model;
 
+import android.animation.AnimatorSet;
 import android.app.Activity;
-import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import il.co.ovalley.dashvsponypolice.app.R;
 
@@ -15,12 +18,17 @@ public class RainbowDash extends GameView {
         m_goingToX=150;
         m_goingToY=200;
         m_waitTime=1;
+        m_xSpeed=2;
         setX(0);
         setY(0);
-     //   setY((getY()-m_goingToY)/(getX()-m_goingToX)*getX());
         changeDirection();
     }
-    private float m_yAdvance;
+    boolean isRight;
+
+    public boolean isRight() {
+        return isRight;
+    }
+
     float m_goingToX;
     float m_goingToY;
     Direction m_directionVer;
@@ -30,29 +38,43 @@ public class RainbowDash extends GameView {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(isDead()){
+                    AnimatorSet animatorSet=new AnimatorSet();
+                    animatorSet.setDuration(2000);
+                    animatorSet.setTarget(this);
+
+     //               Log.d("test","RD was hit");
+                    AlphaAnimation alpha=new AlphaAnimation(100,1);
+                    alpha.setDuration(2000);
+                    startAnimation(alpha);
+                    isDead(false);
+                    return;
+                //    startAnimation(new AlphaAnimation(1,100));
+
+                }
                 float x = getX();
                 float y = getY();
-                if (Math.abs(x - m_goingToX) < 1) m_direction = Direction.STOP;
-                if (Math.abs(y - m_goingToY) < 1) m_directionVer = Direction.STOP;
+                float xPoint=m_xSpeed>1?m_xSpeed:1;
+                float yPoint=m_ySpeed>1?m_ySpeed:1;
+                if (Math.abs(x - m_goingToX) < xPoint) m_direction = Direction.STOP;
+                if (Math.abs(y - m_goingToY) < yPoint) m_directionVer = Direction.STOP;
          //       if (x > 0 && x < m_container.getWidth())
                     switch (m_direction) {
                     case RIGHT:
-                        setX(x + 1);
+                        setX(x + m_xSpeed);
                         break;
 
                     case LEFT:
-                        setX(x - 1);
+                        setX(x - m_xSpeed);
                         break;
                 }
-              //      float newY = m * x+n;
-            //            if (newY > 0 && newY < m_container.getHeight() - 200 &&Math.abs(getY()-newY)<15) setY(newY);
-              //  else
+
                     switch (m_directionVer){
                             case DOWN:
-                                setY(y+m_yAdvance);
+                                setY(y+m_ySpeed*m_xSpeed);
                                 break;
                             case UP:
-                                setY(y-m_yAdvance);
+                                setY(y-m_ySpeed*m_xSpeed);
                                 break;
                         }
       //              Log.d("test","dash going "+m_direction+" "+m_directionVer.toString()+" x: "+getX()+"  y: "+getY()+ "  m: "+m+"  m*x: "+m*x);
@@ -65,32 +87,33 @@ public class RainbowDash extends GameView {
     public void changeDirection() {
         float x=getX();
         float y=getY();
-        m_yAdvance=Math.abs((y - m_goingToY) / (x - m_goingToX));
-        Log.d("test","m = "+m_yAdvance);
-        m_yAdvance=m_yAdvance>2?2:m_yAdvance;
-        float rotation=(float)Math.toDegrees(Math.atan(m_yAdvance));
+        m_ySpeed=Math.abs((y - m_goingToY) / (x - m_goingToX));
+    //    Log.d("test","m = "+m_ySpeed);
+        m_ySpeed=m_ySpeed>2?2:m_ySpeed;
+        float rotation=(float)Math.toDegrees(Math.atan(m_ySpeed));
 
         if(x<m_goingToX) {
             m_direction = Direction.RIGHT;
             setImageResource(R.drawable.rainbow_dash_small_right);
-           // setRotation((float)Math.toDegrees(Math.atan(m_yAdvance)));
+            isRight=true;
+
         }
         else{
             m_direction = Direction.LEFT;
             setImageResource(R.drawable.rainbow_dash_small_left);
             rotation=-rotation;
-    //       setRotation((float)Math.toDegrees(Math.atan(m_yAdvance)));
+            isRight=false;
 
         }
+        AnimationDrawable RDAnimation=(AnimationDrawable)getDrawable();
+        RDAnimation.start();
         if(y<m_goingToY) {
             m_directionVer = Direction.DOWN;
-         //   setRotation(30);
             setRotation(rotation);
         }
         else{
             m_directionVer = Direction.UP;
             setRotation(-rotation);
-        //    setRotation(-30);
         }
     }
 
@@ -99,4 +122,5 @@ public class RainbowDash extends GameView {
         m_goingToX=x;
 
     }
+
 }

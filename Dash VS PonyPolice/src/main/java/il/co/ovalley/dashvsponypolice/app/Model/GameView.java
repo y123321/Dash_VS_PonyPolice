@@ -23,6 +23,8 @@ public abstract class GameView extends ImageView {
         container.addView(this);
         m_waitTime=10;//default waiting time
         m_isDead=false;
+        m_xSpeed=1;
+        m_ySpeed=1;
 
     }
 
@@ -33,7 +35,8 @@ public abstract class GameView extends ImageView {
     int m_waitTime;
     abstract public void update();
     abstract void changeDirection();
-
+    float m_xSpeed;
+    float m_ySpeed;
     public int getWaitTime() {
         return m_waitTime;
     }
