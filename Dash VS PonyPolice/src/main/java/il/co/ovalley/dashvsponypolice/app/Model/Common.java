@@ -1,5 +1,8 @@
 package il.co.ovalley.dashvsponypolice.app.Model;
 
+import android.graphics.Rect;
+import android.view.View;
+
 import java.util.Random;
 
 /**
@@ -7,4 +10,5 @@ import java.util.Random;
  */
 public class Common {
     static Random random=new Random();
+
 }

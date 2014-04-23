@@ -76,9 +76,12 @@ public class CopsAndDropsRunnable implements Runnable {
 
     }
     public void unregister(Cop cop){
+        Rect rect=new Rect();
+        cop.getHitRect(rect);
         if(cop==null) return;
-        if(m_cops.contains(cop))m_cops.remove(cop);
+        m_gameRunnable.remove(cop);
         cop.isDead(true);
+        Log.d("test","cop rect bottom:"+rect.bottom+" top: "+rect.top);
         cop.update();
         cop=null;
 

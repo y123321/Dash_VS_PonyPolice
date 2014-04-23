@@ -1,6 +1,8 @@
     package il.co.ovalley.dashvsponypolice.app.Controller;
 
     import android.app.Activity;
+    import android.graphics.Rect;
+    import android.util.Log;
     import android.view.MotionEvent;
     import android.view.View;
     import android.widget.RelativeLayout;
@@ -25,6 +27,12 @@
         private boolean m_Pause;
         private RelativeLayout m_layout;
         private volatile boolean m_IsGameRunning;
+
+        public boolean remove(Object object) {
+            m_counter--;
+            return m_cops.remove(object);
+        }
+
         private int m_counter;
         private volatile RainbowDash m_rainbowDash;
 
@@ -81,7 +89,7 @@
 
                     }
                     new Thread(new ShotsRunnable(this,m_shots)).start();
-                    if(m_ClockCounter%m_SpawnTime==0 && m_counter<40)spawnCop();
+                    if(m_ClockCounter%m_SpawnTime==0 && m_counter<2)spawnCop();
                     Thread.sleep(m_ClockWait);
                     m_ClockCounter++;
                 } catch (Exception e) {
@@ -93,11 +101,13 @@
 
             private void spawnCop() {
             m_counter++;
+                final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 Activity activity=(Activity)m_layout.getContext();
                 activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Cop cop=new Cop(m_layout);
+                    Cop cop=new Cop(m_layout,params);
                     m_cops.add(cop);
                 }
             });
@@ -115,16 +125,23 @@
    //         Log.d("test","drop!");
         }
         protected void shoot(Cop cop){
+            final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             cop.update();
-            final float x=cop.getDirection()==Direction.LEFT?cop.getX()-cop.getWidth():cop.getX();
-            final float y=cop.getY()-cop.getHeight();
+            Rect rect=new Rect();
+            cop.getHitRect(rect);
+            final float x=cop.getDirection()==Direction.LEFT?rect.left:rect.right;
+        //    final float y=cop.getY()-cop.getHeight();//todo: reset this line to fit new settings
+         //   final  int y=m_layout.getHeight()- cop.getPaddingBottom()-cop.getHeight();
+            final float y=cop.getPaddingBottom();
+            Log.d("test","location:    y:"+cop.getY()+"   x: "+x);
             Activity activity=(Activity)m_layout.getContext();
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Shot shot=new Shot(m_layout);
+                    Shot shot=new Shot(m_layout,params);
                     shot.setX(x);
-                    shot.setY(y);
+                    shot.setY(shot.getY()-y);
                     m_shots.add(shot);
   //                  _cop.update();
      //               Log.d("test","fire!");

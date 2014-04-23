@@ -15,17 +15,18 @@ public class Cop extends GameView {
         return m_isShooting;
     }
 
-    public Cop(RelativeLayout container) {
-        super(container);
+    public Cop(RelativeLayout container,RelativeLayout.LayoutParams params) {
+        super(container,params);
         m_isShooting=false;
         m_LoadingTime=10;
         m_isLoading=false;
         m_xSpeed=1.5f;
-        Log.d("test","getBottom: "+container.getBottom()+"getHeight: "+container.getHeight());
-        setY(container.getBottom()-Common.random.nextFloat()*100-25/*-getPaddingBottom()*/);
-        float i=(Common.random.nextFloat()+getPaddingRight())*m_container.getWidth()-getPaddingRight();
+        int  yPadding=(Common.random.nextInt(Math.round(container.getHeight()/3)));
+        int xPadding=(Common.random.nextInt(Math.round(m_container.getWidth())));
       //  Log.d("test", "x: "+i);
-        setX(i);
+        setX(xPadding);
+        setPadding(0,0, 0, yPadding);  // left, top, right, bottom
+        Log.d("test","cop y: "+getY()+"  padding: "+getPaddingBottom()+" paddinfOffset: "+getBottomPaddingOffset());
         drwableState=0;
     //    this.setImageResource(R.drawable.police_pony_small_right);
         changeDirection();
@@ -36,7 +37,7 @@ public class Cop extends GameView {
     private int m_LoadingTimeCounter;
     private int drwableState;
      void changeDirection(){
-        stepCounter=Common.random.nextInt(20);
+        stepCounter=Common.random.nextInt(50);
         m_direction=Common.random.nextBoolean()?Direction.LEFT:Direction.RIGHT;
 
 
@@ -73,6 +74,8 @@ public class Cop extends GameView {
                 animateCop();
                 stepCounter--;
                 if (stepCounter == 0) changeDirection();
+                if(getX()<=1) m_direction=Direction.RIGHT;
+                else if(getX()>=m_container.getWidth()) m_direction=Direction.LEFT;
                 int rand=Common.random.nextInt(100);
                 if(rand==30) {
                     shoot();
@@ -109,8 +112,8 @@ public class Cop extends GameView {
         float x = getX();
         switch (m_direction) {
             case LEFT:
-                if (x - 1 > getPaddingLeft()) {
-                    setX(x - m_xSpeed);
+                if (x - 1 > 0) {
+                  setX(x - m_xSpeed);
                 } else changeDirection();
                 break;
             case RIGHT:

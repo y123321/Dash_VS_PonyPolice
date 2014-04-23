@@ -21,11 +21,19 @@ public abstract class GameView extends ImageView {
         super(container.getContext());
         m_container=container;
         container.addView(this);
+        init();
+    }
+    public GameView(RelativeLayout container,RelativeLayout.LayoutParams params){
+        super(container.getContext());
+        m_container=container;
+        container.addView(this,params);
+        init();
+    }
+    private void init(){
         m_waitTime=10;//default waiting time
         m_isDead=false;
         m_xSpeed=1;
         m_ySpeed=1;
-
     }
 
     boolean m_isDead;

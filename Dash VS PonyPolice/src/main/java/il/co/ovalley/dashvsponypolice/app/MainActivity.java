@@ -1,5 +1,6 @@
 package il.co.ovalley.dashvsponypolice.app;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import il.co.ovalley.dashvsponypolice.app.Controller.GameRunnable;
 import il.co.ovalley.dashvsponypolice.app.Model.RainbowDash;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     GameRunnable m_GameRunnable;
     RelativeLayout m_Layout;
     @Override

@@ -10,8 +10,8 @@ import il.co.ovalley.dashvsponypolice.app.R;
  * Created by yuval on 20/04/2014.
  */
 public class Shot extends GameView{
-    public Shot(RelativeLayout container) {
-        super(container);
+    public Shot(RelativeLayout container,RelativeLayout.LayoutParams params) {
+        super(container,params);
         setImageResource(R.drawable.circle_small);
         m_waitTime=3;
         m_ySpeed=3;
