@@ -26,7 +26,7 @@ public class Cop extends GameView {
       //  Log.d("test", "x: "+i);
         setX(xPadding);
         setPadding(0,0, 0, yPadding);  // left, top, right, bottom
-        Log.d("test","cop y: "+getY()+"  padding: "+getPaddingBottom()+" paddinfOffset: "+getBottomPaddingOffset());
+        Log.d("test","cop y: "+getY()+"  padding: "+getPaddingBottom()+" paddinfOffset: "+getBottomPaddingOffset()  );
         drwableState=0;
     //    this.setImageResource(R.drawable.police_pony_small_right);
         changeDirection();
